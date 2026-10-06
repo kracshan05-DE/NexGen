@@ -1,0 +1,965 @@
+/* ==========================================================================
+   Admin area. Uses the same tokens as the public site (globals.css), so it
+   reads as part of Nexgen rather than a generic dashboard.
+   ========================================================================== */
+
+/* ---------- frame ---------- */
+.app {
+  min-height: 100dvh;
+  background: var(--tint);
+}
+
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbarInner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brandLogo {
+  height: 28px;
+  width: auto;
+}
+
+.brandLabel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.accountEmail {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-right: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topLink {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.topLink:hover {
+  background: var(--tint);
+}
+
+.main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 80px;
+}
+
+@media (max-width: 640px) {
+  .accountEmail {
+    display: none;
+  }
+
+  .main {
+    padding-top: 28px;
+  }
+}
+
+/* ---------- shared bits ---------- */
+.btnQuiet {
+  background: var(--panel);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btnQuiet:hover {
+  border-color: var(--ink);
+}
+
+.btnDanger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btnDanger:hover {
+  background: #8f1c13;
+}
+
+.ref {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+.sub {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.none {
+  color: var(--ink-faint);
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.flash,
+.formSuccess {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  font-size: 14px;
+  background: #e9f6ee;
+  border: 1px solid #1a7f4b;
+  border-radius: var(--radius);
+}
+
+.formError {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: #fdecea;
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+}
+
+/* ---------- status marks ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  /* The label is always ink; only the mark carries the status colour. */
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.mark {
+  flex: none;
+}
+
+.mark_new {
+  color: var(--amber-deep);
+}
+
+.mark_contacted,
+.mark_quoted {
+  color: var(--accent);
+}
+
+.mark_won {
+  color: #1a7f4b;
+}
+
+.mark_lost,
+.mark_spam {
+  color: var(--ink-faint);
+}
+
+/* ---------- dashboard head ---------- */
+.pageHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.lead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* The one number the page leads with. */
+.leadFigure {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.leadText {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 640px) {
+  .pageHead {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+
+  .leadFigure {
+    font-size: 52px;
+  }
+
+  .leadText {
+    font-size: 17px;
+  }
+}
+
+/* ---------- pipeline ---------- */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.pipeline li + li {
+  /* Pull each stage under the previous one's point, leaving a 4px seam. */
+  margin-left: -10px;
+}
+
+.stage {
+  --notch: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  padding: 16px 28px 16px 32px;
+  background: var(--panel);
+  color: var(--ink);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--notch)) 0,
+    100% 50%,
+    calc(100% - var(--notch)) 100%,
+    0 100%,
+    var(--notch) 50%
+  );
+  transition: background 0.15s ease;
+}
+
+.pipeline li:first-child .stage {
+  padding-left: 20px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--notch)) 0,
+    100% 50%,
+    calc(100% - var(--notch)) 100%,
+    0 100%
+  );
+}
+
+.pipeline li:last-child .stage {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--notch) 50%);
+}
+
+.stage:hover {
+  background: #e7ebf1;
+}
+
+.stage[aria-current="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+
+.stage:focus-visible {
+  /* clip-path would cut off an outer ring, so draw it inside. */
+  outline-offset: -5px;
+}
+
+.stage[aria-current="true"]:focus-visible {
+  outline-color: var(--amber);
+}
+
+/* On the dark selected stage the mark goes white. It keeps its shape, and it
+   never borrows another status's colour. */
+.stage[aria-current="true"] :global(svg) {
+  color: #fff;
+}
+
+.stageLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.stageCount {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.otherViews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin-top: 14px;
+}
+
+.otherViews a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  border-radius: var(--radius);
+}
+
+.otherViews a span {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.otherViews a:hover {
+  background: #e7ebf1;
+}
+
+.otherViews a[aria-current="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+
+.otherViews a[aria-current="true"] span {
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .pipeline {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .pipeline li + li {
+    margin-left: 0;
+  }
+
+  .stage,
+  .pipeline li:first-child .stage,
+  .pipeline li:last-child .stage {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    clip-path: none;
+  }
+
+  .stageCount {
+    font-size: 20px;
+  }
+}
+
+/* ---------- search ---------- */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 16px;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.search input::placeholder {
+  color: var(--ink-faint);
+}
+
+.search :global(.btn) {
+  height: 48px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.clear {
+  font-size: 13.5px;
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  padding: 8px 4px;
+}
+
+@media (max-width: 640px) {
+  .search {
+    flex-wrap: wrap;
+  }
+
+  .search input {
+    flex-basis: 100%;
+  }
+}
+
+/* ---------- ledger ---------- */
+.ledger {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.ledgerHead,
+.row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1.5fr) minmax(0, 1.3fr) 170px 130px;
+  gap: 20px;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.ledgerHead {
+  min-height: 44px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.ledgerHead span:nth-child(4) {
+  text-align: right;
+}
+
+.ledger li + li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.row {
+  position: relative;
+  min-height: 68px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 14px;
+  color: var(--ink);
+  transition: background 0.12s ease;
+}
+
+.row:hover {
+  background: #f7f9fb;
+}
+
+.row:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Unanswered enquiries: amber rule down the left edge and a heavier name. */
+.isNew::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--amber);
+}
+
+.name {
+  display: block;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.isNew .name {
+  font-weight: 700;
+}
+
+.cellDate {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.cellFrom,
+.cellFacility {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cellNumber {
+  text-align: right;
+  /* Columns of figures line up digit under digit. */
+  font-variant-numeric: tabular-nums;
+}
+
+.cellLabel {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .ledgerHead {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "from status"
+      "from date"
+      "facility facility"
+      "number number";
+    gap: 4px 16px;
+    padding: 16px;
+    align-items: start;
+  }
+
+  .cellFrom {
+    grid-area: from;
+  }
+
+  .cellStatus {
+    grid-area: status;
+    justify-self: end;
+  }
+
+  .cellDate {
+    grid-area: date;
+    justify-self: end;
+    font-size: 13px;
+  }
+
+  .cellFacility {
+    grid-area: facility;
+    margin-top: 4px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  .cellFacility .sub {
+    display: inline;
+  }
+
+  .cellFacility .sub::before {
+    content: ", ";
+  }
+
+  .cellNumber {
+    grid-area: number;
+    text-align: left;
+    font-size: 13.5px;
+  }
+
+  /* No estimate: drop the line instead of printing "None" on every card. */
+  .cellNumber:has(.none) {
+    display: none;
+  }
+
+  .cellLabel {
+    display: inline;
+    color: var(--ink-soft);
+  }
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.pagerLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pagerLinks a {
+  color: var(--accent-deep);
+  font-weight: 600;
+  padding: 8px 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pagerLinks [aria-disabled="true"] {
+  color: var(--ink-faint);
+  padding: 8px 4px;
+}
+
+.empty {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.empty h2 {
+  font-size: 20px;
+}
+
+.empty p {
+  margin: 10px auto 22px;
+  max-width: 420px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ---------- enquiry detail ---------- */
+.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 6px 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.detailHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.detailHead h1 {
+  font-size: clamp(26px, 3.4vw, 36px);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.detailCompany {
+  margin-top: 4px;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+
+.detailHead .badge {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.detailMain,
+.detailSide {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.detailSide {
+  position: sticky;
+  top: 20px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 24px;
+  min-width: 0;
+}
+
+.panel h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.quick :global(.btn) {
+  padding: 12px 18px;
+  font-size: 14px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.facts dt {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+}
+
+.facts dd {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.message {
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 68ch;
+}
+
+.history li {
+  position: relative;
+  padding: 0 0 16px 20px;
+  font-size: 14px;
+  border-left: 1px solid var(--line);
+}
+
+.history li:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+
+.history li::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  background: var(--ink);
+}
+
+.danger {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 0 24px;
+}
+
+.danger summary {
+  padding: 16px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.danger p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+.danger form {
+  padding-bottom: 20px;
+}
+
+@media (max-width: 960px) {
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailSide {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .panel {
+    padding: 20px 16px;
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+  }
+
+  .quick :global(.btn) {
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+/* ---------- forms ---------- */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 13px;
+  /* 16px stops iOS Safari zooming the page when a field is focused. */
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid rgba(18, 22, 28, 0.32);
+  border-radius: var(--radius);
+}
+
+.field textarea {
+  display: block;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.saveState {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #17643c;
+}
+
+.saveError {
+  color: var(--danger);
+}
+
+/* ---------- sign-in / sign-up ---------- */
+.authPage {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+  background: var(--tint);
+}
+
+.authPage:focus {
+  outline: none;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 440px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  /* The site's clipped corner, carried over from the estimator panel. */
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+  padding: 40px 36px 36px;
+}
+
+.authLogo {
+  display: inline-block;
+  margin-bottom: 28px;
+}
+
+.authLogo img {
+  height: 36px;
+  width: auto;
+}
+
+.authCard h1 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.authIntro {
+  margin: 10px 0 24px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.authFooter {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.authFooter a {
+  color: var(--accent-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.notice h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.notice p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .authCard {
+    padding: 32px 22px 26px;
+  }
+}

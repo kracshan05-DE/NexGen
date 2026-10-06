@@ -1,0 +1,62 @@
+.section {
+  background: var(--steel);
+}
+
+.section :global(.head) h2 {
+  color: #fff;
+}
+
+.section :global(.head) p:not(:global(.tag)) {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card {
+  background: var(--steel);
+  padding: 30px 24px;
+  color: #fff;
+  transition: background 0.25s ease;
+}
+
+.card:hover {
+  background: var(--steel-soft);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 16px;
+  color: var(--amber);
+}
+
+.card h3 {
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 7px;
+  line-height: 1.35;
+}
+
+.card p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

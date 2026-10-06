@@ -1,0 +1,265 @@
+.hero {
+  position: relative;
+  padding: calc(var(--header-h) + 72px) 0 0;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: calc(var(--header-h) + 44px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: calc(var(--header-h) + 38px);
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.still,
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.still {
+  object-position: 70% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video {
+    display: none;
+  }
+}
+
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(10, 14, 20, 0.94) 0%,
+    rgba(10, 14, 20, 0.82) 38%,
+    rgba(10, 14, 20, 0.5) 68%,
+    rgba(10, 14, 20, 0.28) 100%
+  );
+}
+
+/* On narrow screens the text spans the full width, so darken evenly. */
+@media (max-width: 760px) {
+  .media::after {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 14, 20, 0.86) 0%,
+      rgba(10, 14, 20, 0.8) 100%
+    );
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.content {
+  max-width: 640px;
+  padding-bottom: 56px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+  background: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 9px 20px;
+  border-radius: 30px;
+}
+
+.content h1 {
+  color: #fff;
+}
+
+.line1 {
+  display: block;
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 2px;
+}
+
+.line2 {
+  display: block;
+  font-size: clamp(37px, 5.4vw, 64px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+}
+
+.hl {
+  color: var(--amber);
+}
+
+.sub {
+  margin-top: 22px;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.checks {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+}
+
+.checks li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.checks svg {
+  width: 15px;
+  height: 15px;
+  color: var(--amber);
+  flex: none;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+@media (max-width: 420px) {
+  .actions :global(.btn) {
+    width: 100%;
+  }
+}
+
+/* ---- stats bar, attached to the bottom of the hero ---- */
+.stats {
+  position: relative;
+  z-index: 2;
+  background: var(--steel);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 max(var(--gutter), calc((100% - var(--maxw)) / 2 + var(--gutter)));
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 30px 32px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  text-align: center;
+}
+
+.stat:first-child {
+  border-left: none;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.lbl {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.62);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat {
+    padding: 22px 16px;
+  }
+
+  .stat:nth-child(3) {
+    border-left: none;
+  }
+
+  .stat:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .num {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .num {
+    font-size: 21px;
+  }
+
+  .lbl {
+    font-size: 10.5px;
+  }
+}
+
+/*
+ * Entrance animation. The badge and headline are NOT animated: the headline is
+ * the page's Largest Contentful Paint element, and text that starts at
+ * opacity 0 is unreadable (and unmeasured) until the fade finishes. The
+ * supporting content eases in beneath it.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .sub,
+  .checks,
+  .actions {
+    animation: heroIn 0.7s ease both;
+  }
+
+  .checks {
+    animation-delay: 0.08s;
+  }
+
+  .actions {
+    animation-delay: 0.16s;
+  }
+
+  @keyframes heroIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

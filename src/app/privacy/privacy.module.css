@@ -1,0 +1,40 @@
+.main {
+  padding: calc(var(--header-h) + 64px) 0 96px;
+}
+
+.wrap {
+  max-width: 760px;
+}
+
+.wrap h1 {
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.wrap :global(.placeholder-note) {
+  margin: 0 0 24px;
+}
+
+.lead {
+  font-size: 17px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.wrap h2 {
+  font-size: 20px;
+  margin: 40px 0 10px;
+}
+
+.wrap p {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.wrap a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

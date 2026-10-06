@@ -1,0 +1,248 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.nav {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  height: 32px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logoImg {
+  transform: scale(1.05);
+}
+
+.links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.link {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--amber);
+  transition: width 0.25s ease;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.phone {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.phone:hover {
+  color: var(--ink);
+}
+
+.phone svg {
+  width: 14px;
+  height: 14px;
+  color: var(--accent);
+  flex: none;
+}
+
+.accountLink {
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 8px 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.accountLink:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.adminBtn {
+  padding: 13px 18px;
+  font-size: 14px;
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.adminBtn:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* Signed in: the account controls take the phone number's place on desktop. */
+@media (min-width: 1021px) {
+  .signedIn .phone {
+    display: none;
+  }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-right: -11px;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burger span {
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  display: block;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+@media (max-width: 1180px) and (min-width: 1021px) {
+  .links {
+    gap: 20px;
+  }
+
+  .cta {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .burger {
+    display: flex;
+  }
+
+  .links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--panel);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    /* Hidden links must not be reachable by keyboard or screen reader. */
+    visibility: hidden;
+    border-bottom: 1px solid transparent;
+    transition:
+      max-height 0.35s ease,
+      visibility 0s linear 0.35s;
+  }
+
+  .links.open {
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+    visibility: visible;
+    border-bottom-color: var(--line);
+    box-shadow: var(--shadow-lg);
+    transition:
+      max-height 0.35s ease,
+      visibility 0s;
+  }
+
+  .link {
+    padding: 16px var(--gutter);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .link::after {
+    display: none;
+  }
+
+  .cta {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px var(--gutter);
+    gap: 12px;
+  }
+
+  .phone {
+    justify-content: center;
+    padding: 12px 0;
+    font-size: 15px;
+  }
+
+  .accountLink {
+    padding: 12px 0;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  .adminBtn {
+    padding: 15px 26px;
+    font-size: 15px;
+  }
+}

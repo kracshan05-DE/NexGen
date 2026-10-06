@@ -1,0 +1,102 @@
+.list {
+  border-top: 1px solid var(--line);
+  max-width: 760px;
+  /* Lets the browser animate to and from `auto` heights where supported. */
+  interpolate-size: allow-keywords;
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+}
+
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 4px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.question h3 {
+  font-size: 15.5px;
+  line-height: 1.4;
+}
+
+.plus {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.plus::before {
+  left: 0;
+  top: 9px;
+  width: 20px;
+  height: 1.6px;
+}
+
+.plus::after {
+  left: 9px;
+  top: 0;
+  width: 1.6px;
+  height: 20px;
+}
+
+.item[open] .plus::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+/*
+ * Smooth open/close in browsers that support ::details-content; everywhere
+ * else the answer simply appears, which is a fine fallback.
+ */
+.item::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 0.3s ease,
+    content-visibility 0.3s allow-discrete;
+}
+
+.item[open]::details-content {
+  block-size: auto;
+}
+
+.answer {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  padding: 0 4px 22px;
+  max-width: 660px;
+}
+
+.more {
+  margin-top: 26px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.more a {
+  color: var(--accent-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

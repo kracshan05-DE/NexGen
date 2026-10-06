@@ -1,0 +1,93 @@
+.section {
+  position: relative;
+  background: var(--ink);
+  color: #fff;
+  overflow: hidden;
+  padding: 96px 0;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.media img {
+  object-fit: cover;
+  opacity: 0.22;
+}
+
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 14, 20, 0.75), rgba(10, 14, 20, 0.94));
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.copy h2 {
+  color: #fff;
+  font-size: clamp(26px, 3.6vw, 40px);
+  line-height: 1.18;
+}
+
+.copy p {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 440px;
+}
+
+.lines {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 15.5px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.lines a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  overflow-wrap: anywhere;
+}
+
+.lines a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.lines svg {
+  width: 16px;
+  height: 16px;
+  color: var(--amber);
+  flex: none;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 68px 0;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 52px 0;
+  }
+}
